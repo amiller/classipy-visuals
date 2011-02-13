@@ -1,0 +1,48 @@
+<html>
+<head>
+<title>classipy_diff</title>
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.4.2.min.js"> </script>
+<meta http-equiv="CACHE-CONTROL" content="NO-CACHE"/>
+</head>
+<body>
+<style>
+</style>
+
+<h3>Classifier Performance (Class: {{ cls }})</h3>
+<ul>Runs / Features
+  {% for run in runs %}
+  <li><a href="#run_{{forloop.counter0}}">{{ run.filename }}</a>
+  <ul>
+    <li><a href="#run_{{forloop.counter}}_hard">Hardest Images</a>
+  </ul>
+  {% endfor %}
+</ul>
+<ul>Comparisons
+  <li>Images that improved the most in rank
+</ul>
+
+<img src="{{ chart|safe }}"/>
+      
+
+
+
+{% for run in runs %}
+<a name="run_{{forloop.counter0}}">
+<h3>Run {{forloop.counter0}}: {{ run.filename }} </h3></a>
+
+Hardest positive images (label: 1, low confidence)
+ <div><div style='float:left'>
+  {{ run.hardest_pos_div|safe }}
+ </div></div>
+Hardest negative images (label: -1, high confidence)
+ <div><div style='float:left'>
+  {{ run.hardest_neg_div|safe }}
+ </div></div>
+
+{% endfor %}
+
+
+
+</body>
+</html>
+
