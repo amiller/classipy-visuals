@@ -3,11 +3,21 @@ from pylab import *
 import classipy_diff
 
 
+#labels = np.array([-1, -1, 1, 1, -1, -1, 1, -1, -1, 1])
+#labels = np.sign(np.random.random(80)-0.5)
+labels = np.array([ 1.,  1., -1., -1.,  1., -1., -1.,  1., -1., -1., -1.,  1.,  1.,
+                   -1.,  1., -1., -1.,  1.,  1., -1., -1.,  1.,  1., -1., -1., -1.,
+                   -1.,  1., -1.,  1., -1., -1.,  1.,  1.,  1., -1.,  1.,  1.,  1.,
+                    1., -1.,  1., -1., -1.,  1.,  1., -1., -1., -1., -1., -1., -1.,
+                   -1.,  1.,  1.,  1.,  1.,  1.,  1., -1.,  1.,  1., -1., -1.,  1.,
+                    1.,  1.,  1.,  1.,  1., -1., -1., -1.,  1.,  1., -1.,  1.,  1.,
+                   -1., -1.])
+                  
 def filter_exact(run_items):
     """Return indices corresponding to the exact 'kept' values.
     No care has been taken to match the ideal behavior for edge cases
     """
-    labels = np.array([_['label'] for _ in run_items])
+    #labels = np.array([_['label'] for _ in run_items])
     inds = []
     for i in range(len(labels)-1):
         if labels[i]==-1 and labels[i+1]==1:
@@ -21,8 +31,7 @@ def load_pickle():
 
 
 def make_roc(run_items):
-    confs = np.array([_['conf'] for _ in run_items])
-    labels = np.array([_['label'] for _ in run_items])
+    #labels = np.array([_['label'] for _ in run_items])
     tn = np.cumsum(labels == -1)
     fn = np.cumsum(labels == 1)
     P = np.sum(labels == 1)
@@ -42,6 +51,7 @@ if __name__ == '__main__' or 1:
     clf()
     plot(FPR, TPR)
     scatter(FPR, TPR, color='k', marker='+')
+    # exact=[20,28,40] force fewer points selected for the figure
     scatter(FPR[exact], TPR[exact], color='r', marker='o')
     xlabel('False Positive Rate')
     ylabel('True Positive Rate')

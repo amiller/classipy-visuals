@@ -24,8 +24,17 @@
 <img src="{{ chart|safe }}"/>
       
 
+<h3>Hardest Images over all runs</h3>
+<small>(displayed rank and confidence are from Run 0</small>
+<div style='float:left'>
+{{ hardest_pos_div|safe }}
+</div>
+<div style='float:left'>
+{{ hardest_neg_div|safe }}
+</div>
 
 
+<h3>Per Classifier Performance</h3>
 {% for run in runs %}
 <a name="run_{{forloop.counter0}}">
 <h3>Run {{forloop.counter0}}: {{ run.filename }} </h3></a>
