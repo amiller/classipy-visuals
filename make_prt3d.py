@@ -4,6 +4,8 @@ import numpy as np
 import pylab
 import argparse
 
+pylab.rc('text',usetex=True)
+
 default_cls = 'person'
 default_pkl = 'validation-1298129177.09'
 
@@ -11,13 +13,18 @@ default_pkl = 'validation-1298129177.09'
 def draw_fig(inds, cls=default_cls):
     fig = pylab.figure(1)
     fig.clf()
+    fig.set_size_inches(3.9,3)
     ax = p3.Axes3D(fig,azim=29,elev=22)
-
+    ax.locator_params(tight=True, nbins=4)
+    ax.xaxis.set_tick_params(labelsize='x-small')
+    ax.yaxis.set_tick_params(labelsize='x-small')
+    ax.zaxis.set_tick_params(labelsize='x-small')
     ax.scatter3D(Rec[inds],
                  Prc[inds],
                  Time[inds][:-1],
-                 c='b',marker='o',alpha=0.4,
-                 vmin=[0,0], vmax=[1,1])
+                 c='b',marker='o',alpha=0.4)
+    ax.set_xlim(0,1)
+    ax.set_ylim(0,1)
 
     length = lengths[inds][0]
     alg = C[np.nonzero(inds)[0][0]]
@@ -26,7 +33,7 @@ def draw_fig(inds, cls=default_cls):
     ax.set_ylabel('Precision')
     ax.set_xlabel('Recall')
     ax.set_zlabel('Time (s)')
-    ax.set_title('Threshold PRT for %s [%d](%d-stage cascade)' %
+    ax.set_title('PRT for %s $[%d]$(%d-stage cascade)' %
                  (cls, keys[inds][0], length))
     pylab.draw()
 
@@ -67,4 +74,5 @@ if __name__ == "__main__" and not 'cms' in globals():
     keys = np.array([tbl[c] for c in C])
 
     draw_fig(keys==args.alg, cls=args.cls)
+    #draw_fig(lengths==1)
     pylab.figure(1).savefig(args.out)
